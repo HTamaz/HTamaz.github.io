@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<html lang="hu">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+        <title>A Lift</title>
+    <style>
+        #navigator {
+            z-index: 3;
+            color: white;
+            position: fixed;
+            border: 0.1vw white solid;
+            top: 3vw;
+            left: 3vw;
+            min-width: 5vh;
+            padding: 1vw;
+            font-size: 0.8vw;
+            backdrop-filter: blur(3px);
+        }
+
+        #body {
+            width: 80%;            
+            min-width: 300px;      
+            max-width: 1200px;     
+            margin: 0 auto;        
+            color: white; 
+            font-size: 3vw; 
+            text-align: center; 
+            position: absolute; 
+            top: 10vh; 
+            left: 0; 
+            right: 0;
+        }
+
+        *::selection {
+            background-color: #277058;
+            color: white;
+        }
+
+        #title {
+            font-size: 6vh;
+            z-index: 3;
+            position: relative;
+        }
+
+        #alttitle {
+            margin-top: 3vh;
+            text-align: center;
+            font-size: 15%;
+            z-index: 3;
+            position: relative;
+        }
+
+        hr.seperator {
+            margin-top: 1vh;
+            margin-bottom: 1vh;
+        }
+
+        .left {
+            text-align: left;
+            z-index: 2;
+            position: relative;
+        }
+
+        div.topic {
+            margin: auto;
+            font-size: 15pt;
+            width: 70%;
+            margin-bottom: 10vh;
+        }
+        
+        h1.topic_header {
+            font-size: 3vh;
+        }
+
+        #backg {
+            z-index: 1; 
+            text-align: center; 
+            font-size: 1vh;
+            color: rgba(255, 255, 255, 0.2); 
+            position: fixed; 
+            top: 50%; 
+            left: 50%; 
+            transform: translate(-50%, -50%); 
+            user-select: none;
+        }
+
+        #article_img {
+            width: 20vh;
+            height: 20vh;
+            margin: auto;
+            font-size: 3vh;
+            z-index: 3;
+            position: relative;
+            border: 0.1vh solid aquamarine;
+        }
+
+        div.list {
+            margin-left: 1vw;
+        }
+
+        a {
+            text-decoration: none;
+            color: aquamarine;
+        }
+
+        h3.nav {
+            margin: 0px;
+            font-size: 2vw;
+        }
+
+        .egy {font-size: 3vh; color: aquamarine;}
+        .egy::before {content: "1. ";}
+
+        .ketto {font-size: 3vh; color: aquamarine;}
+        .ketto::before {content: "2. ";}
+
+        .harom {font-size: 3vh; color: aquamarine;}
+        .harom::before {content: "3. ";}
+
+        .negy {font-size: 3vh; color: aquamarine;}
+        .negy::before {content: "4. ";}
+
+        .ot {font-size: 3vh; color: aquamarine;}
+        .ot::before {content: "5. ";}
+
+        .hat {font-size: 3vh; color: aquamarine;}
+        .hat::before {content: "6. ";}
+
+        .het {font-size: 3vh; color: aquamarine;}
+        .het::before {content: "7. ";}
+
+        .nyolc {font-size: 3vh; color: aquamarine;}
+        .nyolc::before {content: "8. ";}
+
+        .kilenc {font-size: 3vh; color: aquamarine;}
+        .kilenc::before {content: "9. ";}
+
+        .tiz {font-size: 3vh; color: aquamarine;}
+        .tiz::before {content: "10. ";}
+
+        .tizenegy {font-size: 3vh; color: aquamarine;}
+        .tizenegy::before {content: "11. ";}
+
+        .tizenketto {font-size: 3vh; color: aquamarine;}
+        .tizenketto::before {content: "12. ";}
+
+        .tizenharom {font-size: 3vh; color: aquamarine;}
+        .tizenharom::before {content: "13. ";}
+
+        li {
+            padding-bottom: 1vh;
+        }
+
+        h2 {
+            font-size: 3vh;
+        }
+
+        .kiemel {
+            color: aquamarine;
+        }
+
+        footer {
+            text-align: left;
+            font-size: 1.5vh;
+        }
+
+        .felsorol::before {
+            content: "+ ";
+            color: aquamarine;
+        }
+
+    </style>
+    </head>
+    <body style="background-color: black; font-family: monospace;">
+        <div id="navigator">
+            <a href="sample.html" style="color: white;" title="Ugrás az oldal tetejére!"><h3 class="nav" style="text-align: center;">Navigátor</h3></a>
+            <hr>
+            <a href="#topic1">BEVEZETÉS</a>
+            <div class="list">
+                <a href="#topic1entry1">1. Általános fogalmak</a><br>
+                <a href="#topic1entry2">2. Játékosokra vonatkozó fogalmak</a><br>
+                <a href="#topic1entry3">3. Ellenségekre vonatkozó fogalmak</a><br>
+            </div>
+            <br>
+            <a href="#topic2">GÉPEK</a>
+            <div class="list">
+                <a href="#topic2entry1">1. M2/Hönnun</a><br>
+                <a href="#topic2entry2">2. M1/Iosif</a><br>
+                <a href="#topic2entry3">3. M3/Corrina</a><br>
+            </div>
+            <br>
+            <a href="#topic3">SZINTEK</a>
+            <div class="list">
+                <a href="#topic3entry1">1. Erdei szint</a><br>
+                <a href="#topic3entry2">2. Légi szint</a><br>
+                <a href="#topic3entry3">3. Vízi szint</a><br>
+                <a href="#topic3entry4">4. Óramű szint</a><br>
+                <a href="#topic3entry5">5. Szürreális szint</a><br>
+                <a href="#topic3entry6">6. Absztrakt szint</a><br>
+                <a href="#topic3entry7">7. A Mennyország kapuja</a><br>
+            </div>
+            <br>
+            <a href="#topic4">TÁRGYAK</a>
+            <div class="list">
+                <a href="#topic4entry1">1. Fegyverek</a><br>
+                <a href="#topic4entry2">2. Ereklyék</a><br>
+            </div>
+        </div>
+        <div id="body">
+            <div id="article_img">
+                <img src="muse.png" alt="A Múzsa képe!" style="width: 100%;" title="A Múzsa!">
+            </div>
+            <h1 id="title">A Lift</h1>
+
+            <hr class="seperator">
+
+            <div class="topic" id="topic1">
+                <h1 class="topic_header left">BEVEZETÉS:</h1>
+                <p style="text-align: left;">Ez a szekció a játék alapmechanikáit tárgyalja, mely segítségével az enciklopédia többi része könnyebben értelmezhető.</p>
+                <div class="left">
+                    <p id="topic1entry1" class="kiemel">Általános fogalmak:</p>
+                    <ul>
+                        <li>Életerő: Egy entitás általános vitalitása, képessége az élethez. Ameddig nygobb mint 0, addig cselekvőképes.</li>
+                        <li>Ügyesség (DEX): Egy entitás fürgesége, koordinációja. Ez határozza meg hogy egy támadás talál-e vagy sem.</li>
+                        <li>Erő (STR): Egy entitás erőkifejtő képessége. Ez határozza meg egy játékos blokkolását, illetve minden entitás sebzését képes módosítani.</li>
+                        <li>Képességpróba: Egy próba melynek következtében a próbára tett készség nagyságával egyenlő százalék eséllyel történik sikeresen egy adott cselekedet (pl.: Egy ellenség ügyessége 50, ezáltal 50% eséllyel lesz sikeres egy támadása).</li>
+                        <li>Hatás: Olyan faktorok melyek a harc minden körében érvényesülnek (pl.: Az égés minden körben 3 sebzést okoz).</li>
+                    </ul>
+                    <p id="topic1entry2" class="kiemel">Játékosokra vonatkozó fogalmak:</p>
+                    <ul>
+                        <li>Mentiáls integritás (SAN): A játékos elméjének éppsége, ezzel lehet ereklyéket használni.</li>
+                        <li>Blokk: az a mennyiség amennyi sebzést egy körben a játékos el tud hárítani.</li>
+                    </ul>
+                    <p id="topic1entry3" class="kiemel">Ellenségekre vonatkozó fogalmak:</p>
+                    <ul>
+                        <li>Szívósság: az a mennyiség amennyivel minden sebesülés enyhül. Ez a szám negatív is lehet, mely esetben az ellenség sérülékeny.</li>
+                    </ul>
+                </div> 
+            </div>
+
+            <hr class="seperator">
+
+            <div class="topic" id="topic2">
+                <h1 class="topic_header left">GÉPEK:</h1>
+                <div class="left">
+                    <p id="topic2entry1" class="kiemel egy">M2/Hönnun:</p>
+                    <p>Az első játszható gépezet, mely fizikailag gyenge, ám nagyon precíz célzás terén a többi gépezethez képest.</p>
+                    <p> A benne lakozó lélek Hönnun Erikson, aki valaha egy svéd származású, protestáns vallási radkilaizmus által hajtott terrorista volt akit elfogásakor egy nagyon egyszerű döntés elé állítottak: halál vagy örök szolgálat.</p>
+                    <p class="felsorol"><span class="kiemel">HP:</span> 50</p>
+                    <p class="felsorol"><span class="kiemel">DEX:</span> 70</p>
+                    <p class="felsorol"><span class="kiemel">STR:</span> 30</p>
+                    <p class="felsorol"><span class="kiemel">SAN:</span> 50</p>
+                    <p>Kezdő fegyverek:</p>
+                    <ul>
+                        <li>Luger pisztoly</li>
+                        <li>Aknavető</li>
+                    </ul>
+
+                    <p id="topic2entry2" class="kiemel ketto">M1/Iosif:</p>
+                    <p>A második játszható gépezet, mely rendkívül pontatlan és mentálisan instabil, de hatalmas ereje hasznossá teszi a közelharci ütközetekben.</p>
+                    <p>A benne lakozó lélek Iosif Orlov, valaha fehérorosz zsoldos volt aki folyamatos ivása és mentális instabilitása végett véletelnül végzett saját feleségével. Ő a vezeklés céljából választotta ezt a sorsot magának.</p>
+                    <p class="felsorol"><span class="kiemel">HP:</span> 60</p>
+                    <p class="felsorol"><span class="kiemel">DEX:</span> 40</p>
+                    <p class="felsorol"><span class="kiemel">STR:</span> 70</p>
+                    <p class="felsorol"><span class="kiemel">SAN:</span> 40</p>
+                    <p>Kezdő fegyverek:</p>
+                    <ul>
+                        <li>Kampóvető</li>
+                        <li>Taktikai balta</li>
+                    </ul>
+
+                    <p id="topic2entry3" class="kiemel harom">M3/Corrina:</p>
+                    <p>A harmadik játszható gépezet, melynek teste törékeny, ám elméjének éppsége jóval nagyobb a többi gépénél.</p>
+                    <p> A benne lakozó lélek Corrina Arreola, aki egy tehetősebb közép-amerikai család sarjaként halt bele egy a gerincvelejében képződött idegrákba. Halálakor pusztán - 14 évesen - önszántából vállalta az örök szolgálatot.</p>
+                    <p>Kezdő fegyverek:</p>
+                    <ul>
+                        <li>Öklök</li>
+                    </ul>
+                    <p>Kezdő ereklyék:</p>
+                    <ul>
+                        <li>Szentelt inga</li>
+                    </ul>
+                    <p>Kezdő augmentáció:</p>
+                    <ul>
+                        <li>Invokátor</li>
+                    </ul>
+                </div> 
+            </div>
+
+            <hr class="seperator">
+
+            <div class="topic" id="topic3">
+                <h1 class="topic_header left">SZINTEK:</h1>
+                <p style="text-align: left;">A Lift természete:</p>
+                <ul style="text-align: left;">
+                    <li>Az emberek által gyakran csak "Lift"-nek nevezett hideg acéltorony az angyalok által haszbált Jákob lajtorájának haditevékenységekre kifejelszetett, fizikailag manifesztálódó formája. Bár elsődleges funkciója az angyalseregek és az anygali masinák átkleésének és szállításának biztosítása az anyagi világ és a mennyek között, a struktúra ennél jóval több célt szolgál. Az angyal miután megtisztította a világot az ember mocskától a hosszú és az ember közvetlen környezetét is pusztító háború után, maga fogja újraalkotni a világot olyan módon hogy az kizárja egy olyen gonosz és aljas faj ismételt létrejöttét mint az ember. Ezen világ darabjait a Lift szintjein belül építik elsősorban az égi hierarchia 6. rendjét képző Erények.</li>
+                    <li>A Lift nagysága és természete az emberi elme által nehezen megérthető - megszegi az Euklideszi geometria szabályait, így a szintjei egész kontinensek méretével vetélkednek holott maga a Lift csupán megközelítőleg egy és egy ötöd kilométer széles; a szintek egész égboltokkal rendelkeznek, benne égitestekkel; a struktúra áttöri az ismert világ határait, de ennek semmilyen fizikai jelét nem mutatja, és a magassága nem határozható meg.</li>
+                    <li>A Lift egyes szintjei a teremtés céljával jönnek létre, ám mások kizárólag azért vannak hogy a hadigépeket termeljék látszólagos vég nélkül.</li>
+                </ul>
+                <div class="left">
+                    <p id="topic3entry1" class="egy">Erdei szint:</p>
+                    <p>A földi lények, állatok, jószágok által elfoglalt szint, mely dús fenyő és tölgyfaerdőkkel van borítva.</p>
+                    <p>Az egyik leggyakoribb szint, így néha előfordulnak tökéletlenségek, amomáliák benne. A földi lények mellé gyakran szegeződnek madarak is.</p>
+                    <p>Ellenségek:</p>
+                    <ul>
+                        <li>75% eséllyel Erdei lény</li>
+                        <li>20% eséllyel Légi lény</li>
+                        <li>5% eséllyel Kisebb anomália</li>
+                    </ul>
+                    <p>Natív lény: Erdei lény</p>
+                    <ul>
+                        <li>Szarvas, kojot, oroszlán, őz és farkas - akármilyen földi lény megjelenik ezen a szinten, ám egy dolog közös bennük: harmadik szemük nyílt. Az angyal meg volt elégedve ezekkel a lényekkel, hisz maga az Atya teremtette azokat, így nem változtattak külsejükön. A harmadik szem jelentősége is kizárólag a csatában berül ki, ahol is az angyalokhoz hasonlóan képesek Káin jele által azon gépeket melyek a Lift szintjein belülre merészkedenek.</li>
+                        <li>Főleg harap (1-6 sebzés)</li>
+                        <li>Nem rendelkezik immunitással.</li>
+                    </ul>
+                    <p>Őrző: Angyali dög</p>
+                    <ul>
+                        <li>Sok fényes szem, áttetsző holdfényű szőrme jellemzi az angyali dögöt. Az angyal a szürkefarkas képére teremtette ezt a fürge, vérszomjas bestiát. Az imént említett szőrme az angyalokat körbevevő vékony, de ellenálló fátyolhoz hasonlatos, sőt, valószínűleg azonos vele összetételét tekintve. A dög képes egy olyan vonyítást kiereszteni, mely nem hanghullámok által terjed, hanem magát a lelket rezgeti meg olyan mértékben hogy az ideiglenesen elveszíti a test feletti irányítást.</li>
+                        <li>Típus: Erdei lény</li>
+                        <li>Támadásai:</li>
+                        <ul>
+                            <li>Harapás (1-6 sebzés)</li>
+                            <li>Égi vonyítás (2 kör bénulást okoz)</li>
+                        </ul>
+                        <li>Nem rendelkezik immunitással.</li>
+                    </ul>
+                    
+                    <p id="topic3entry2" class="ketto">Légi szint:</p>
+                    <p>Az égi lények egy véget nem érő vasfa ágai között repdesnek, melyet egy hatalmas ködfátyol lep el.</p>
+                    <p>Az erdei szint mellett rendkívül nagy számban készülnek ilyen szintek, így itt is előfordulnak a teremtés során félresikerült anomáliák.</p>
+                    <p>Ellenségek:</p>
+                    <ul>
+                        <li>90% eséllyel Légi lény</li>
+                        <li>10% eséllyel Kisebb anomália</li>
+                    </ul>
+                    <p>Natív lény: Légi lény</p>
+                    <ul>
+                        <li>Többnyire madarak, denevérek és nagyobb szárnyas rovarok alakját magukra öltő lények, melyek úgyszint három szemmel lettek megáldva születésükkor. A harmadik szem funkciója az erdei lényekéhez hasonlatos. Való igaz, mindegyik az angyalok által teremtett lényről elmondható az mely az erdei lényekről is, így ezen lények is az Úr teremtményeinek javított változatai.</li>
+                        <li>Harapnak (1-6 sebzés), de gyakran karmolnak is (2x támad, 1-3 sebzés)</li>
+                        <li>Az aknákba és csapdákba nem képesek belelépni</li>
+                    </ul>
+                    <p>Őrző: Karbunkulus</p>
+                    <ul>
+                        <li>A szerkezet a nevét onnan kapja, hogy az ember gyakran csak keléseknek nevezi az angyalok által képviselt isteni fényben és discőségben. A háború szüleménye ez a dolog, mely szavakkal igen csak nehézkesen írható le. Hús, szövet, fogak és szemek melyek gömbölyded acélvázakat ölelnek körbe, tetejüket pedig kémények és antennák tarkítják. Ezek a vázak összekapcsolódnak csöveken és drótokon keresztül - így alkotnak ez egyéni kelések "Karbunkulust". Minden kis kelésnek megvannak ez egyéni funkciói, úgy mint a tüzérség vagy a kommunikáció. Az acéltest fenntartása igencsak egyszerű, azonban az azt körülvevő húsé nem annyira. A hús éhezni fog, és az éhinséget csak az emberi hús tudja csillapítani. Így van az hogy az egyes kelések képesek csápokkal emberi testeket magukhoz ragadni és elfogyasztani.</li>
+                        <li>A Karbunkulus bár a Lift légi szintjének örzője, igazából az óramű szintek szülöttei. A céljuk nem az hogy a Liftet őrízzék, hanem hogy odalent írtsák ki az embert és falják fel annak húsát.</li>
+                        <li>Egyes források szerint a Karbunkulus valaha angyal volt. Az angyalok 7. rendjének, az uradalmaknak kötelessége eredetileg az volt hogy az embererket vezessék és segítsék a saját maguk feletti uralkodás során. Az elmélet szerint mikor az angyalhadak megindultak az ember ellen, ez a rend nem volt többé hasznos a mennyország számára. A Karbunkulusok testét körülölelő aranyláncok arra engednek következtetni hogy ezek az előbb említett uradalmak lehetnek azok akiket - akár erővel, akár saját maguk önkéntes feláldozásával - ezekké a hadigépekké alakítottak.</li>
+                        <li>Típus: Óramű</li>
+                        <li>Támadásai:</li>
+                        <ul>
+                            <li>Tüzérség (3x támad, 1-4 sebzés)</li>
+                            <li>Megragagás (A játékos 5 körre mozgásképtelenné válik)</li>
+                        </ul>
+                        <li>Nincsenek immunitásai</li>
+                        <li>Bár lebeg, képes aktiválni csapdákat.</li>
+                    </ul>
+                    
+                    <p id="topic3entry3" class="harom">Vízi szint:</p>
+                    <p>A legritkább a három teremtési szint közül, demég így is viszonylag gyakori. Víz lepi el, és folyamatos sötétség uralkodik benne, melyet a ritkán világító vízalatti növényzet és mikrofauna tör meg helyenként.</p>
+                    <p>Fokozott védelem céljából néhány óraművet is telepítenek ide az angyalok.</p>
+                    <p>Ellenségek:</p>
+                    <ul>
+                        <li>90% eséllyel Mélységi lény</li>
+                        <li>10% eséllyel Óramű</li>
+                    </ul>
+                    <p>Natív lény: Mélységi lény</p>
+                    <ul>
+                        <li>Az előbb említett lényekkel szemben ezek a lények már kevésbé követik a lenti lények sémáját - halak helyett főleg csápos lények és férgek úsznak a Mélységi szint legmélyén. Tetük általában vagy egyáltalán nem, vagy pedig csak kis mértékben rendelkezik szemekkel.</li>
+                        <li>Harapnak (1-6 sebzés), és képesek vérszívásra is (1-6 sebzés, az okozott sebzés értéke + 1 életerőt gyógyulnak)</li>
+                        <li>Immunisak az égésre</li>
+                    </ul>
+                    <p>Őrző: Leviatán</p>
+                    <ul>
+                        <li>Bár a Biblia démonként említi, és eredetileg az is volt, az angyalok a pokol meghódítása után újraalkották a lélekfaló férget szent köntösben, ugyanis katonai haszna nem volt elhanyagolható.</li>
+                        <li>Típus: Mélységi lény</li>
+                        <li>Támadásai:</li>
+                        <ul>
+                            <li>Harapás (1-6 sebzés)</li>
+                            <li>Vérszívás (1-6 sebzés, az okozott sebzés értéke + 1 életerőt gyógyul)</li>
+                        </ul>
+                        <li>Immunis az égésre</li>
+                    </ul>
+
+                    <p id="topic3entry4" class="negy">Óramű szint:</p>
+                    <p>Az első a nem teremtési szintek közül, melynek egyetlen célja az ember pusztítására szánt gépek megállás nélküli előállítása.</p>
+                    <p>Ez a szint egy nagy hatalmas gyárépület, ahol megállás nélkül úgy sípol a gőz mint a templom orgonája, és úgy csattog az acél mint a torony harangja.</p>
+                    <p>Ellenségek:</p>
+                    <ul>
+                        <li>100% eséllyel Óramű</li>
+                    </ul>
+                    <p>Natív lény: Óramű</p>
+                    <ul>
+                        <li>János megírta a jelenések könyvében Abaddon eljöttét, aki 5 hónapon át fogja kínozni emberarcú emberméretű sáskáival a bűnös lelkeket. Abaddon eljött, de sáskák helyett arctalan, az egekbe acéltornyokként törő masinákkal hódít a földön, és bűnteti meg a bűnösöket. Ezen gépeknek kisebb, gyalogsági változatait nagy számban állítják elő ezen szintek.</li>
+                        <li>Tépnek (1-6 sebzés, 25% eséllyel 1 erőt veszítesz) és karmolnak (2x támad, 1-3 sebzés)</li>
+                        <li>Nem marja őket a sav.</li>
+                        <li>2 szívóssággal rendelkeznek</li>
+                    </ul>
+                    <p>Őrző: Félkész angyali szerkezet</p>
+                    <ul>
+                        <li>A kolosszális, egész házakat egy lépéssel elpusztító gépek Abaddon földi hadjáratában igencsak hasznosnak bizonyulnak a játék jelenlegi pillanataiban is. Acéltestüket számos kar veszi körül, mindegyik a saját, egyéni funkciójával. Ezen szerkezetek ha készen vannak egyből a frontvonalra kerülnek, így idefent csak a félkész szerkezetek állíthatják meg a betolakodókat.</li>
+                        <li>Típus: Óramű</li>
+                        <li>Támadásai:</li>
+                        <ul>
+                            <li>Tépés (1-6 sebzés, 25% eséllyel 1 erőt veszítesz)</li>
+                            <li>Karmolás (2x támad, 1-3 sebzés)</li>
+                            <li>Golyószóró (5x támad, 1-1 sebzés, nem vonatkozik rá szintbónusz)</li>
+                        </ul>
+                        <li>Nem marja a sav</li>
+                        <li>Nem rendelkezik szívóssággal a félkész természete miatt</li>
+                    </ul>
+                    
+                    <p id="topic3entry5" class="ot">Szürreális szint:</p>
+                    <p>Isten talán tökéletes, de hiányában az angyalok nem azok. Így az angyalok által aprólékosan megtervezett majd létrehozott szintek miért lennének mind tökéletesek ha azoknak termetői sem mondhatóak annak?</p>
+                    <p>A szürreális szint célja nem az hogy teremtsen, sem pedig az hogy pusztítson. A szürreális szint elveszítette célját, ugyanins maguk a világ pilléreiként szolgáló törvények szegik meg magukat olyan súlyosan, hogy minden ami benne lakozik paradoxikus természetű, magábahajló és az emberi elme számára fel nem fogható. A szürreális szint egy bukott szint.</p>
+                    <p>Natív lény: Kisebb anomália</p>
+                    <ul>
+                        <li>Fog, hús, szőr, fény, márvány, acél, arany és víz - füst, tűz, árnyék, csont és vér: mind megtalálható egy anomáliában, ha csak egy pillanat töredékéig is. Nagyobbak Bábel tornyánál, de beleférnek egy ember kezébe. Nincs olyan lény aki képes lenne megjósolni hogy mit fognak cselekedni akár csak egy pillanattal később is. A létezésük egy hiba, eltávolításuk túl kockázatos. De hátha elegek lesznek a Múzsa gyermekeinek kiírtására.</li>
+                        <li>Harapnak (1-6 sebzés), karmolnak (2x támad, 1-3 sebzés), tépnek (1-6 sebzés, 25% eséllyel 1 erőt veszítesz) és látomásokat (1-6 sebzés, 25% eséllyel 1 mentális integritást veszítesz) okoznak annak aki meglátja őket</li>
+                        <li>Nem rendelkeznek immunitással</li>
+                    </ul>
+                    <p>Őrző: Nagyobb anomália</p>
+                    <ul>
+                        <li>Az anomáliák létezésének határai szabálytalanak, egybefolynak a környezetükkel. Ily módon természetes, hogy ha több anomália közelebb kerül egymáshoz akkor határaik összeolvadnak. Egy tucat anomália összeolvadása már elég egy ilyen "nagyobb anomália létrejöttéhez. Nem néz ki máshogy, nem is viselkedik másképp mint azon anomáliák melyek kiteszik azt, csak éppen jóval erősebb és sokkal kiszámíthatatlanabb.</li>
+                        <li>Típus: Szürreális</li>
+                        <li>Támadásai megegyeznek a kisebb anomáliáéval.</li>
+                        <li>Nem rendelkezik immunitással.</li>
+                    </ul>
+                    
+                    <p id="topic3entry6" class="hat">Absztrakt szint:</p>
+                    <p>Az angyalok bár igyekeznek lezárni azon szintjeiket melyek még nem nevezhetőek késznek, erőfeszítéseik gyakran pocsékba mennek. Ez a Múzsa gyermekeinek azonban csak jót jelent, mert ez egy újabb út a Lift tetejét elzáró vaskapuhoz. Ezek a szintek nevüket onnan kapják, hogy a felük mivel még készen sincs, ezért a bennük lakozó entitások létezése sokszor nem haladja meg az elvont, legfeljebb számok által kifejezhető létet.</p>
+                    <p>Natív lény: Gyenge absztrakció</p>
+                    <ul>
+                        <li>A játékban kockaként való feltűntetésük igencsak megtévesztő, ugyanis arra enged következtetni hogy testük - ha egyáltalán van nekik - kiterjedt. Ez messzebb sem állhatna a valóságtól, ugyanis ezek csak a szó legtágabb értelmében véve csak objektumok, melyek rendelkeznek energiával és képesek erőt kifejteni. Helyzetük nagyjából leírható rendezett számhármasokkal, de ezen felül nehezen felfogható létük. Mivel egyáltalán nem, vagy csak félig rendelkeznek fizikai testtel, instabilitásuk miatt gyakra összeomlanak még mielőtt akármi is árthatna nekik.</li>
+                        <li>A csatában azonnal megpróbálnak széttörni (3x támad, 3-5 sebzés, 5 életerőt veszít minden támadással, nem vonatkozik rá szintbónusz)</li>
+                        <li>Nem rendelkezik immunitással.</li>
+                    </ul>
+                    <p>Őrző: Erény</p>
+                    <ul>
+                        <li>Egy igazi angyal, az 5. angyali rendből. Az Erények célja a fizikai világ szabályainak betartatása, és annak rendjének fenntartása, valamint - amíg volt Isten - az Úr csodáinak megvalósítása. Az Erények odafent a Mennyország kapui mögött még betöltik ezen feladataikat, de a Lift szintjein ennél földhözragadtabb feladatokat látnak el. Ők azok akik megtervezik, majd pedig megépítik a szinteket. Természetesen lenti kötelességük ellátása után a mennyek kapui mögé vonulnak vissza, de a félkész szinteken gyakran fordulnak elő mint azokon dolgozó építészek.</li>
+                        <li>Típus: Angyali</li>
+                        <li>Támadásai:</li>
+                        <ul>
+                            <li>Perzselés (3x támad, 2-5 sebzés)</li>
+                            <li>Taszítás (2 kör mozgásképtelenséget okoz)</li>
+                        </ul>
+                        <li>Nem rendelkezik immunitással.</li>
+                    </ul>
+                    
+                    <p id="topic3entry7" class="het">A Mennyország kapuja:</p>
+                    <p>Trónusok zárt szemei forognak a Lift és a Mennyország közti vaskapu körül, minden erejükkel a hatalmas struktúra fenntartásáért küzdve. A látványukat azonban egy vékony, áttetsző ezüstfátyol rejti el részben, melyet a holdfényhez hasonló tejfehér szín világít meg. Ilyen fátyol fed el minden angyalt, kivéve a Trónusokat, akik lángoló, szemekkel gravírozott arangyűrűként jelennek meg az ember szemeiben.</p>
+                    <p>A kapu az égből nyílik, ferdén néve a földre. A Lift teteje a fátylakat leszámítva puszta acél, és aranyláncok egész erdeje mely a kapuhoz köti.</p>
+                    <p>Maga a kapu őrízetlen, de ha a Trónusok veszélyt éreznek a közelükben akkor azonnal megjelenik egy a mennyeket védelmező Kerub.</p>
+                    <p>Őrző: Kerub</p>
+                    <ul>
+                        <p>A Kerub egy angyal hat szárnnyal, két acélból öntött madárlábbal és 3 - eredetileg 4 - fejjel. A 2. angyali rendet képzik ők, szerepkörük nem sokat változott az Úr halála óta - céljuk a Mennyország és az Édenkert védelme.</p>
+                        <p>Levágott fej:</p>
+                        <ul style="list-style-type: disc;">
+                            <li>Az emberfejet önkéntesen levágatták az emberekkel vívott háború napjának kezdetén, mert a csúfság és a gonoszság szimbólumává vált. A sebből előtörő fényáradat azonban így sem haaszontalan. A Kerub így a saját, testéből kitörő lelkével képes védeni a még meglévő arcait.</li>
+                            <li>Típus: Szürreális</li>
+                            <li>Támadásai:</li>
+                            <ul style="list-style-type: circle;">
+                                <li>Oltalmazás (+1 szívósság egy véletlenszerű fejnek)</li>
+                                <li>Gyógyítás (+5 életerő egy véletlenszerű fejnek)</li>
+                            </ul>
+                            <li>Nem rendelkezik immunitással.</li>
+                        </ul>
+                        <p>Oroszlánfej:</p>
+                        <ul style="list-style-type: disc;">
+                            <li>A vadállatokat szimbolizálja a mai napig. Az angyali döghöz hasonlóan izzó fehér szemek lepik el az arcát, szőre fedig sápadt, de holdfénnyel izzó.</li>
+                            <li>Típus: Erdei lény</li>
+                            <li>Támadásai:</li>
+                            <ul style="list-style-type: circle;">
+                                <li>Harapás (1-6 + 8 sebzés)</li>
+                                <li>Hasító ordítás (1 ügyességet vesz el a játékostól)</li>
+                            </ul>
+                            <li>Nem rendelkezik immunitással.</li>
+                        </ul>
+                        <p>Sasfej:</p>
+                        <ul style="list-style-type: disc;">
+                            <li>A madarakat és légi lényeket nagy általánosságban szimbolizáló arca, mely nem különbözik a légi lények háromszemű, vascsőrű madárarcától.</li>
+                            <li>Típus: Légi lény</li>
+                            <li>Támadásai:</li>
+                            <ul style="list-style-type: circle;">
+                                <li>Karmolás (2x támad, 1-3 + 2 sebzés)</li>
+                                <li>Vad karmolás (4x támad, 1-2 + 2 sebzés)</li>
+                            </ul>
+                            <li>Nem képes csapdákat aktiválni.</li>
+                        </ul>
+                        <p>Ökörfej:</p>
+                        <ul style="list-style-type: disc;">
+                            <li>A haszonállatokat szimbolizálta, és a mai napig is ezt teszi. Azonban az ökör volt a maradék három fej közül a leggyengébbik, így sok Kerub önszántából vassal és acéllal kívánta fejleszteni azt.</li>
+                            <li>Típus: Óramű</li>
+                            <li>Támadásai:</li>
+                            <ul style="list-style-type: circle;">
+                                <li>Roham (2 körre lebénítja és mozgásképtelenné teszi a játékost)</li>
+                                <li>Várakozás (passzolja a kört)</li>
+                            </ul>
+                            <li>Nem marja a sav.</li>
+                        </ul>
+                    </ul>
+                </div> 
+            </div>
+
+            <hr class="seperator">
+
+            <div class="topic left" id="topic4">
+                <h1 class="topic_header left" id="topic4">TÁRGYAK:</h1>
+                <h2 id="topic4entry1">Fegyverek</h2>
+                <p class="egy">Öklök:</p>
+                <ul>
+                    <li>Egy emberi ököl, semmi különös.</li>
+                    <li>Típus: Közelharci</li>
+                    <li>Sebzés: Min 1, Max 1</li>
+                </ul>
+
+                <p class="ketto">Stahlfaust:</p>
+                <ul>
+                    <li>A Stahlfaust Überlader modul közelharci küzdelemre szabott tartozéka, mely önmagában továbbra sem több egy acélból kovácsolt ökölnél.</li>
+                    <li>Kinézetét tekintve hiraulikus alkatrészekre támaszkodó ököl, mely a Múzsa háromszemű napját viseli heraldrikus elemkéntt a hátulján.</li>
+                    <li>Típus: Közelharci</li>
+                    <li>Sebzés: Min 3, Max 4</li>
+                </ul>
+
+                <p class="harom">Luger pisztoly:</p>
+                <ul>
+                    <li>Kisméretű kézi lőfegyver, Hönnun nagy becsben tartott fegyvere.</li>
+                    <li>A pisztoly magazin alapú töltéssel rendelkezik, és nagyméretű csöve nagyobb kaliberű lövedékek kilövésére is alkalmas.</li>
+                    <li>Típus: Távolsági</li>
+                    <li>Sebzés: Min 3, Max 6</li>
+                    <li>1 szívósságot vesz le a célpontról sikeres találat esetén.</li>
+                    <li>Ár: 8</li>
+                </ul>
+
+                <p class="negy">Aknavető:</p>
+                <ul>
+                    <li>Hönnun másik kezdőfegyvere, egy kisebb erejű taposóaknák telepítésére alkalmas eszköz.</li>
+                    <li>A fegyver két fémsínen át csúsztatja le az aknákat biztonságosan, melyek a fegyver markolat feletti részében várják a telepítést.</li>
+                    <li>Típus: Csapda</li>
+                    <li>Sebzés: Min 4, Max 6</li>
+                    <li>Légi ellenségek nem képesek aktiválni.</li>
+                    <li>Ár: 13</li>
+                </ul>
+
+                <p class="ot">Taktikai balta:</p>
+                <ul>
+                    <li>Iosif elsődleges kezdőfegyvere, egy robosztus acélbalta melynek hidraulikus szerkezete képes a csapás erejét minden óvatlan ellenségre átterjeszteni.</li>
+                    <li>Típus: Közelharci</li>
+                    <li>Sebzés: Min 4, Max 8</li>
+                    <li>Az okozott sebzés fele átterjed minden ellenségre.</li>
+                    <li>Ár: 15</li>
+                </ul>
+
+                <p class="hat">Villamosdárda:</p>
+                <ul>
+                    <li>Elektromossággal izzított, tűszerű, könnyen egyensúlyozható közelharci fegyver.</li>
+                    <li>Az izzó hegy a Múzsa áldásának köszönhetően olyan hőmérsékleteket tud elérni a fegyver, hogy a kezeletlen acél attól pillanatok leforgása alatt megolvadna.</li>
+                    <li>Típus: Közelharci</li>
+                    <li>Sebzés: Min 6, Max 8</li>
+                    <li>A célpont 3 körön át szenved az izzó acél tüzétől, és az égés minden körében 3 sebzést szenved.</li>
+                    <li>Ár: 12</li>
+                </ul>
+
+                <p class="het">Bénító nyílpuska:</p>
+                <ul>
+                    <li>Egy rendkívül pontos fegyver, mely bár nem sebez sokat, lövedéke által képes lebénítani a célpontot.</li>
+                    <li>Típus: Távolsági</li>
+                    <li>Sebzés: Min 4, Max 6</li>
+                    <li>A célpont 1 körig cselekvésképtelen.</li>
+                    <li>Ár: 16</li>
+                </ul>
+
+                <p class="nyolc">Sörétes:</p>
+                <ul>
+                    <li>A sörétespuska bemutatása nem feltétlenül szükséges - ez a fegyver hatalmas ereje könnyedén átszeli bármely gépezet vagy angyali korcs páncélját.</li>
+                    <li>Típus: Távolsági</li>
+                    <li>Sebzés: Min 2, Max 4</li>
+                    <li>Sebzésbónusz: 3</li>
+                    <li>Ár: 10</li>
+                </ul>
+
+                <p class="kilenc">Huszárkarabély:</p>
+                <ul>
+                    <li>Ezt a fegyvert többnyire az átlagos katona kezei forgatják, de a Lift falain belül is megállja a helyét. Nagykaliberű lövedékei kifejezetten a vastag páncél tartós károsítására szolgálnak.</li>
+                    <li>Típus: Távolsági</li>
+                    <li>Sebzés: Min 4, Max 7</li>
+                    <li>Sebzésbónusz: 1</li>
+                    <li>2 szívósságot vesz le a célpontról sikeres találat esetén.</li>
+                    <li>Ár: 15</li>
+                </ul>
+
+                <p class="tiz">Kampóvető:</p>
+                <ul>
+                    <li>Eredetileg a Múzsa adta Iosifnak a lomha mozgásának kompenzálására, ez a "fegyver" inkább egy eszköznek nevezhető.</li>
+                    <li>Típus: Távolsági</li>
+                    <li>Sebzés: Min 1, Max 1</li>
+                    <li>Minden sikeres találat megnöveli a lendületed 5-tel</li>
+                    <li>Ár: 13</li>
+                </ul>
+
+                <p class="tizenegy">Gépfűrész:</p>
+                <ul>
+                    <li>A sok apró fogas láncszem gyors mozgása nagyon effektív mind a hús szelésére, mind pedig a fém megtörésére.</li>
+                    <li>Típus: Közelharci</li>
+                    <li>Sebzés: Min 5, Max 6</li>
+                    <li>2 szívósságot vesz le a célpontról sikeres találat esetén.</li>
+                    <li>Ár: 35</li>
+                </ul>
+
+                <p class="tizenketto">Golyószóró:</p>
+                <ul>
+                    <li>Az angyali hardigépek általános felszerelésének alapját képezik ezek a halálos szerkezetek. Kiválóan képes kordában tartani a páncélozatlan egységeket.</li>
+                    <li>Ez a fegyver nem megvásárolható.</li>
+                    <li>Típus: Távolsági</li>
+                    <li>Sebzés: Min 3, Max 7</li>
+                    <li>Az okozott sebzés fele átterjed minden ellenségre</li>
+                </ul>
+
+                <p class="tizenharom">Termitvető:</p>
+                <ul>
+                    <li>A termit olyan fémkészítmény mely könnyedén lyukat olvaszt bármely vaskos acélvázba, így képes az ellenség szívósságának csökkentésére.</li>
+                    <li>Típus: Csapda</li>
+                    <li>Sebzés: Min 2, Max 5</li>
+                    <li>Az okozott sebzés nem az ellenség életerejét csökkenti, hanem annak szívósságát.</li>
+                    <li>Ár: 20</li>
+                </ul>
+
+                <h2 id="topic4entry2">Ereklyék</h2>
+                <p class="egy">Kronomanta flaska:</p>
+                <ul>
+                    <li>Az absztrakt szinteken munkálkodó Erények hozták létre a szint felépítésével kapcsolatos munkafolyamatok időbeliségének egyszerűsítésére, egy aféle verziókontrollos eszközként. Bár maga az eszköz teljes mértékben békés rendeltetésű, a benne tárolható erő alkalmas élet kioltására.</li>
+                    <li>Ha valaha is megsebződsz, úgy dönthetsz hogy eltárolod a sebzés erejét a flaskába.</li>
+                    <li>A flaskában tárolt erő bármikor kiereszthető sikeres mentális integritáspróbát követően.</li>
+                    <li>A flaska egyszerre csak egy támadás sebzését képes elraktározni.</li>
+                </ul>
+
+                <p class="ketto">A korong:</p>
+                <p>TRIVIA: Ez egy utalás Jorge Luis Borges "A Korong" című művére.</p>
+                <ul>
+                    <li>A Korong egy puszta anomália melyet vagy nem vettek észre a szintet teremtő Erények, vagy pedig nem gondolták úgy hogy fontos lenne megjavítani.</li>
+                    <li>A Korong használatakor felruház a Féloldalúság hatásával, mely 50% eséllyel elhárít minden támadást.</li>
+                </ul>
+
+                <p class="harom">Szentelt inga:</p>
+                <ul>
+                    <li>A Múzsa ajándéka egyetlen szeretett leányának, Corrinának.</li>
+                    <li>Az inga képes 2 körre lebénítani egy ellenséget.</li>
+                </ul>
+
+                <p class="ot">Angyaldárda:</p>
+                <ul>
+                    <li>Egy halott angyal fegyvere, forgatása egy földi lénynek szinte teljesen lehetetlen, ám a benne rejlő színtiszta isteni eredetű hatalom megcsapolása talán lehetséges.</li>
+                    <li>Az összes ellenséget 2 körre cselekvésképtelenné teszi.</li>
+                </ul>
+            </div>
+
+            <hr class="seperator">
+
+            <footer>
+                <p><span class="kiemel">A weboldal A Lift nevű játékhoz készült!</span></p>
+                <p><span class="kiemel">A Python kódot írta: </span>Herczeg Tamás</p>
+                <p><span class="kiemel">A weboldalt készítette: </span>Herczeg Tamás <span class="kiemel">és</span> Keczkó Roland István</p>
+            </footer>
+
+        </div>
+
+
+
+
+        <p id="backg">
+            |oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo|
+            |oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo|
+            |oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo|
+            |oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo|
+            |oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo|
+            |oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo|
+            |oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo|
+            |oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo|
+            |oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo|
+            |oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo|
+            |oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo|
+            |oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo|
+            |oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo|
+            |oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo|
+            |oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo|
+            |oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo|
+            |oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo|
+            |oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo|
+            |ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooocloooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooolcooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo|
+            |oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo:,cooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooc,:oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo|
+            |ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooool;,;cooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooc;,;loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo|
+            |oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooc;:llcloooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooolcll:;looooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo|
+            |oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooll:;::llcoooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooocll::::llooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo|
+            |oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo:;cl:;;;cccooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooccc;;;:lc;:oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo|
+            |ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooool::c:;:cc',lcloooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooolcl,'cc:;:c::loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo|
+            |ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooool:;cc;;coool::lcloooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooolcl::loooc;:cc;:loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo|
+            |ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooc::::,,:loooool;;:cloooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooolc:,;loooool:,,:c:;coooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo|
+            |ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo:,:l:,,cooooooool;,,:looooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooool:,,;looooooooc,,:l:,:ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo|
+            |ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooc:cc::coooooooooool;,;:looooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooool:;,;looooooooooo:::cc:coooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo|
+            |ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooool:::;:looooooooooooool;:ccloooooooooooooooooooooooooooooooooooooooooooloooooooooooolooooooooooooooooooooooooooooooooooooooooooolcc:;looooooooooooool:;c::loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo|
+            |oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooool;:c,;ooooooooooooooooo:',cccoooooooooooooooooooooooooooooooooooooocclc:colloooolloc:clccooooooooooooooooooooooooooooooooooooooccc,':ooooooooooooooooo;;c:;looooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo|
+            |ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooool;;:;:loooooooooooooooool'.';';loooooooooooooooooooooooooooooollllc:cccccc:cloooolc:cccccc:cllllooooooooooooooooooooooooooooool;';'.'coooooooooooooooool:;:;;loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo|
+            |oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo;,,;:ooooooooooooooooooooc'.,..,looooooooooooooooooooooooooooo:;;;;;cc:cloloooooooololc:cc;;;;;:oooooooooooooooooooooooooooool,..'.'coooooooooooooooooooo:;,,;oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo|
+            |oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooc,;;,coooooooccoc:loooooooo;,,'..':ooooooooooooooooooooollol:;:;;;;;;cc:loooooc:clooooolccc;,;;;;:;:lollooooooooooooooooooooo:'..',,;ooooooool:loccoooooooc,;;,cooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo|
+            |ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooc:::,;looooooo:;lc;coooooooolcc;,,',coooooooooooollooolcoccol:;;;colllooooooooc...,ooooooooolcloc;;;:loccoccooollooooooooooooc,',,;cclooooooooc;cl;:oooooool;,:::coooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo|
+            |ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooolc::;'coooooooo:;cc:loooooooooool:;;;coooooooooooc;;;loc:clclol:;cooooooooooooo:....loooooooooooooc;:lolclc:col;;;coooooooooooc;;;:loooooooooooc:cc;:ooooooooc';::clooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo|
+            |oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooolc:c:;:ooooooool:,;cccloooooooooooc:,,:loooolloooolc:,;llcccccoolclooooooooooooo:....:ooooooooooooolcloocccccll;,::loooollooooo:,,:cooooooooooolccc;,:loooooooo:;:cccloooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo|
+            |oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooool;:cccclooolllooc;',cc;;coooooooooolc:,:looooc;clooocc:,;lcclc:looooooooooooooodo,.'..;oooooooooooooooooc:cllcl;,:ccoollc;cooool:,:clooooooooooc;;cc,';loolllooolcccc:;looooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo|
+            |oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooodl;;cc;:ooooc:cloc,';l:;:clcclooooooc:,..:::clo:;::lolll:,:ccolcloooooooooooooooo:.,ll;'coooooooooooooooolclocc:,:lllol::;:olc:::..,:cooooooocclc:;:l:',colc:coooo:;cc;;looooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo|
+            |oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooool;,:;,looooccccol::ll;:c:ccccloooooc,'..;:,:cc:,:::coool;,;:loooooooooooooooooo:..;ll;..looooooooooooooooool:;,:loooc:::,:cc:,:;..';cooooolcccc:c:;ll::coccccooool,;:,;looooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo|
+            |oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo;';',ool:cc:cccccooocll:ll:::loool;;,..;:::c;;,,:::cclolcccloooooooooooooooooc'........,looooooooooooooooolccclolcc:::,,,;c:::;..,;;loool:::ll:llcoooc:ccc:cccloo,';';oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo|
+            |oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo:,:,'loolllc:::clooooooooool:coooc:;..,:clcc::;;llclllooooooooooooooooooooooc;;cc::::cc;;cooooooooooooooooooooooollcll;;::cclc:,..;:coooc:loooooooooolc::cclclool',:,:oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo|
+            |ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooool;c:':ooooccllcclooooooooooc,,colllc::clolc;:ccooooooooooooooooooooooooool:,,clcloodolcl:',coooooooooooooooooooooooooolcc::coolc:;cllloc,,loooooooooolccllccoooo:':c;loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo|
+            |ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooc,,c::ooool:;:clooooooooooo:',coooooooooool::looooooooooooooooooooooolcc:..,lolcloooolcloc,.'cccloooooooooooooooooooooool::loooooooooooc,':ooooooooooolc:;:loooo::c,,coooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo|
+            |ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooc;,cc,;clooolc:ccloooooooooc,:oooooooooooo::looooool:ll:clcooooooool:,....;lc::looooool::ll;...',:ooooooooolll:llclooooool::ooooooooooooc,cooooooooolcc:clooooc;,cc,;coooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo|
+            |ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooool:';:'',:loooollcclooooooooolooooooooooooooooooooooc;;;:c::loooooc:;'...,clccccloooooolcclccc,...';:coooool::c:;;;coooooooolooooooooooooolooooooooolcclooooolc,.':;':loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo|
+            |oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooool'.;:,,cccclooolloooooooooooooooooooooooooooooooolclc:looloooolc'....';coollc;,;::::;,:clloo:;'....'cloooooool:clcloooooooooooooooooooooooooooooooollooolcccc,,:;.'cooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo|
+            |oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooolcclc;;:c;:l:',cooooooooooooooooooooooooooooooooooooclooooooooool,.....':cl:'................,clc:'.....,loooooooooolcooooooooooooooooooooooooooooooooooooc,':l:;::;;clccooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo|
+            |ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooolcccc::;;;clc:;clooooooooooooooooooooooooooloooooooooooooooooool....,:cc:.....................,llc:,....loooooooooooooooooooloooooooooooooooooooooooooolc;;clc;;;::cccclooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo|
+            |ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooolcclc::clc;;;;loooloooooooooooooooooooooooool:;coooooooooooooooc:,...;loo;........,cloolc,........cool;...,:coooooooooooooolc;:loooooooooooooooooooooooooloool;;;;clc::clcclooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo|
+            |ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooolc::clccclccc;;cooooooooooolcll::collooooodooo;...;;:cclooooooo:,'..'loo;......cOXWMMMMMMNKx:......cool'..,,:ooooooolcc:;;'..;oooodoooolloc::llccoooooooooooc:;:cclccccc:::oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo|
+            |ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooc:;;;;;:::::cloooooooooooll:cc;;:ccclooooooool,.,::;'.',:looooc;...;coc......xNMN0dlllox0NMNx.....,ooc;..';cooool:,'.,:::,.,loooooooolccc:;;cc:llooooooooooolc:::::;;;;::coooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo|
+            |ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooolc:;;;::looooooooooc;:::loooolclooooooooc,;l:'.',,..,:looc,...:lo:.....lNMMx.......'0MMNl.....lol:...,cool;...,,..,co;,coooooooolclooool:::;cooooooooool::;;;:clooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo|
+            |oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooolcccclooooollooooooooooooc::cloooooooooooooooc';:..dkodx'..;ool:,..:oo:.....oWMWd.......'0MMWo.....loo:.';:loo;..:kodOc.'c;'cooooooooooooooolcc:cooooooooooolllooooolccccloooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo|
+            |ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooolllllc:;coooooooooooooooooooolclooooooooooooooooo;''.'OO.dO,.';oool;..'lo:.....'OWMNd,....:OWMNx......ldl'..:looo;..lOl.Ko..;';ooooooooooooooooolclooooooooooooooooooooc;:clllllooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo|
+            |oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooolc:ccllc:;coooooooooooooooooooolloooooooooooooooool;,'..:c:..,::loooc;..:oc.......oKWMNX00XWMNO:......,oo:..;coool:;..,cc;..;;;looooooooooooooooolloooooooooooooooooooo:;;cllcc:cooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo|
+            |ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooolllllllloooooooooooooooooooooooooooooooooooooooooc;'....':llclooooc,..coc'.......;ldxkkxdl,.......;loc..:loooolclc;.....,;cooooooooooooooooooooooooooooooooooooooooollllllllooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo|
+            |oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo:,;clc:;coolllllloooooooooolc::cccc;,;:loooooooollc:;;:cclooooool:..:oo:'....................,coo;.':ooooooolcc:;;::llooooooool:,,;cccc::cloooooooooollllllol:;:llc;,:oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo|
+            |oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooodolc;,,'....',,......',,,,................';coooooooooooooooooooooooc'.,clc;;,'............';::cl:'.,loooooooooooooooooooooooc;'................,,,,'.....',''....',,;cloooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo|
+            |oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooolcllooollc:;,,'..'..'..'',,,;;::cllc:;;;;'....';loooooooooooooooooooooc,,:::llcc:;;;;;,;:clcll::;',coooooooooooooooooooool;'...',;;;;:llcc::;;,,,'...'..'..',;;:cllooollcloooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo|
+            |oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo:,,;:cclooooool:;'.'cc::llcc:cclloc;'',,;::::,...,:ooooooooooolccllcclooc:;;;;:cccc:;,:cccc:;;;::coolc:llcclooooooooooo:'...;:::;;,'',;lollcc:clll::cc'.';:loooooolcc:;,,:looooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo|
+            |oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooolc:::cloooooooo:,.';ccccc::cooc'...........';,...,loooooool:;,,;;,':ooolc:,;clc:cc;;cc:clc;,:coooo:',;;,,;:loooooooc'...;;............,looc::ccccc;'';coooooooolc:::cloooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo|
+            |oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooolllooooooooooool:;,::;:clooc....:dkkdc'....;:'..:oooooooc;;,:loollooooolc:;clc::;;::clc;;cloooooccool:,;;cooooool,..,:'....'cdkkd:...'loolc:;;;,;cooooooooooooollllooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo|
+            |ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooollooooooooooooool,.';:ccol...,0WNOkXWNd....':,..,looooool::loooooooooooooccllccclccllcclooooooooooool::looooooc...;;....'xXN0k0WW0,..,oocc;'..:ooooooooooooooollooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo|
+            |oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooool::::cclccoooooooooool:..,coo:...dWMx..;KMNl....cc,...;llccllllooool:loooooooooolloooolloooooooooolcloooollllcclc,...,c;....kMMO'.,0MWd...loo:..'cooooooooooooccllc::::looooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo|
+            |oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooool::cllc:ccllllcloooooool,':ooc...oWMXdlkNWO,...;llc:'.'clcc::clc:cllccllccloooooooooooooooooolccllccllc:clc::ccl:..':clc'...:0WNklkNMWo..'lol,':oooooooolcllllccccllc::looooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo|
+            |ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooolcllc::clllccccloooooooooc:;:l:...ckXNWN0l....:lc:clc;:lc::::;;;,',;:;::;,,;cloooooooooooolc;,,;::;:;,',::;::::cc;;ccc:cc,....oKNNNKx:..'ll:;:looooooooolcccclllc::cllclooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo|
+            |ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooolcccclooolllloooooolcclooool;;:c,....','...':ccccclooooooolllcc:,,......''.'''';:;:c::;:;''''..'......,,:cccllooooooolcccc:;....''.....:c:;:loooolccooooooollllooolcccclooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo|
+            |oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooollooolllloooooooooooolc:cc:::;;::;;,...';lolc:cloollooooooooooooc:'.......',,,;;;;;;;;;;,,''.......':coooooooooooolloolc:cllc;....,;:c;,::::cc:cloooooooooooollllooolllooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo|
+            |oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooollllooooollooooooooooc:'...'',;;::;;:::lollccc:,;coooooooooooooooc,'''','.,loll:;;:llol,.','''',coooooooooooooooc;,:ccclloc::;;;:;;;',,...,:cooooooooooloooooolllloooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo|
+            |ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooccllccc:::clooooooooooolc:;;;;;,........''',;;;:loooooooolloooooool:cclooccloooooooooolccoolcc:looooooollooooooooo:;;;,'''.....'.',;;;;::clooooooooooolc::::ccllccoooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo|
+            |oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooolccccc::clccllooooooooooooooollcc::::cllooooooooooooooo:,,;;,;;;:::clooooooooooooooooooollc::::;;,;;,,:ooooooooooooooolc::::cccllooooooooooooooollcclc::cccccloooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo|
+            |ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooolccllc:;:cc:;;loooooooooooooooooooooooooooooooooooooooooolc:,.......;;;cooooooooooooooooc;;;.......,:clooooooooooooooooooooooooooooooooooooooooool;;;cc:;:cllcclooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo|
+            |oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooc:clolc;;;:clooooooooooooooooooooooooooooooooocll:looooooolcc:;;;,..'',clloooollc,''..,;;;:ccloooooool:llcooooooooooooooooooooooooooooooooolc:;;;clolc:cooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo|
+            |oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooloool:::::;;clooooooooooooooooooooooooooooool:;;,:lccooooooooooolc;,;ccllooooolllcc;,;cloodooooooooccl:,;;:loooooooooooooooooooooooooooooolc;;::::clooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo|
+            |ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooolccc:,,:loooollooooooooooooooooooooccool,..';c:;:loooooooooollllloooooooooooooolllllooooooooool:;:c;'..,looccoooooooooooooooooooollooool:,,:ccllooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo|
+            |ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooc:;,:loool:c::looooooooooooooooooc,;ll;...;c:;,,:clooooooolc:;,....';cllc;''...';:clooooooolc:,,;:c;...;lo;,cooooooooooooooooool::ccloool:,;:coooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo|
+            |ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooc::coooooccc:;:col::oollolllcccc:',ll;,..'c:,'';;;looooooooolc:,.':cloooolc:'.,:cloooooooool;;;'',:c'..,;ll,':cccclllooool::loc:;:cccoooooc::codoooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo|
+            |oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooollooooool:cll;,.''',:c:c:::c:;;;,':c:;,',:;,,;:::cc:::loooooooll:;cooooooooc;:lloooooool:::cc:::;,,;:,',;:c:',;;;:c:::c:c:,'''.,;loc:coooooolloooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo|
+            |oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo:':lcc;;:looc::;:cll;::;;;c:;:c:c;';ccc:cc:::cloooooooooc,.',,;;,''.,cooooooooolc:::cc:ccc;';c:c:;:c;;;::;llc;;::cool:;;ccl:':oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo|
+            |oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo:;c;,coolcll::::loooloc:::lc:lool::ccccc:::::;cccloooool,...',,,,'...,looooolccc;;::::ccccc::lool:cl:::coloool::::llcloo:,;c;:oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo|
+            |oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooool;;cc::llc:cllloooooooooc;coooooooolc:cc:::;;:c:'.:oooooooooooooooooooooooooo:.':c:;;:::cc:clooooooooc;cooooooooolllc:cllc:cl;;looooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo|
+            |oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooc;col;:ccccooooooooooooolloooooooool;:::::;:c;,'..;:looooooc:;;,,;;:cooooool:;..',;c:;:::::;looooooooollooooooooooooocccc::loc;cooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo|
+            |oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooodlclolcooooooooooooooooooooooool::::::;cc'.''.''':oool:'..........':looo:'''.''.'cc:::::::looooooooooooooooooooooolclolclooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo|
+            |ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo::ooooooooooolloooooooooooccc::::c:'.;;'.',;:ll;'..............';lo:;;'.';;.':c::::cclooooooooooollooooooooooo::ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo|
+            |ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooc;;cooooooooolcooooooooooool::llcc,.'col;';looo:'................':oool;';loc,.,ccll::loooooooooooocloooooooooc;;coooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo|
+            |oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooc;;;:looooooo:;looooooooooolccc::;;,;:loc',looooc'....,cccccc,....'cooool,'col:;,,;::cccooooooooooool;:oooooool:;;;cooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo|
+            |ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooool:,,cccooooool,;oooooooooolc;;:;;'..';lc;,:loooc:lc'....,cllc,....'llccooolc,;cl;'..';;:;;cooooooooooo;,looooooccc,,:loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo|
+            |oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooolc;;llcooooool:loooooooooo:,,;:'.....,;'':ooool::loo;............;ool::loooo:'';,.....,:;,,:ooooooooool:loooooocll;;cloooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo|
+            |oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooollooooooooo:;ldooolclooolcc:'.........,cllc:;:cloooc;,'....',;cooolc:;:cllc,.........':ccoooolclooool;:ooooooooolloooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo|
+            |oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooolcclooooc::clll:;;looooo:'''........,:,,;;,:::;cloool:;;:looolc;:::,;;,,:,........'',:oooool;;:lllc::coooolllloooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo|
+            |oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooool:;;:looooc:::::;;:lolooooc;.............;;.,;;,,;co:,:cc:,:oc;,,;;,.;;.............;clooolol:;;:::::cooool:;;:looooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo|
+            |ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooc:::ccloooo::lc:lccccc:cloooc.............::..,:,.,cc'.',,'.'cc,.,:,..::.............looolc:cccccl:cl::oooolcc:::coooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo|
+            |oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooc:;:l:::cooolloooooolcc;:oooo;.................:c..;c:'......':c;..c:.................;oooo:;ccloooooolcoooc::cl:;:cooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo|
+            |ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooool:;:lc:cclooooooooooooolcloool;.................::..';:ll,..,lc:;'..::.................;looolclooooooooooooolcc:clc;:loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo|
+            |ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooolloc:lccloooooooooooooooooool:c'...............;;...,col'..'loc,...;;...............'c:looooooooooooooooooolccl:collooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo|
+            |ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo:;llcccollooooooooooooooooo::l,.':.................col....ldc................'c,.,l::ooooooooooooooooollocccll::ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo|
+            |oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooool::loc:cloclooolloooooooooooo:,:l;,co:...............'ll....ll'...............:oc,;l:,:oooooooooooolloooccolc:col::looooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo|
+            |ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooloooc:lolclooccccoooolooool::;;;cc;coc,..............;:....:;..............,coc:cc;;;::loooolooooccccoolclol:coooloooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo|
+            |ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooolooc:cccclcclcolcooooc,;ll:,,,,:oc;::';l,......................,l;'::;co:,,,;:ll;,coooocloclcclcccc:coolooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo|
+            |oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooool::lc;col:::cccooooc.,oollc:,';::co:':l,..'..............'..,l:':oc::;'':clloo,.coooo:cc:::loc;cl::looooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo|
+            |oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooc;col;col;:c:;':oooo;,lolcoooc;,',cl;'cl,.;c,...,..,...,c;.,oc';lc,',;cooocloc,;oooo:';:c:;ldc;loc;cooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo|
+            |ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooolloolcldlclc;:,'cooolc::cc::cllolc;;,';ll;;lo;..;,,;..;ol;;ll;',;:clollc::ccc:cloooc',:;clclolcloollooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo|
+            |ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooloooloc;c:';cloooc',;;:;;:loooc;'';::;:cc'.',,'.'cc:;;:;'';coool:;;:;;,':ooolc;':c;coloooloooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo|
+            |oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooloc;,,:oloo:.'cl::coolooooll:,',,'..',,'..',,',:lloooolooc::lc'.:oolo:,,;cllooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo|
+            |ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooool::cc:col'.:lc:coolclccooooooollloooollloolooooccoclooc:cl:.'loc:cc::ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo|
+            |ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooool::ccll'..clcloool::::cloolllloooooolllloolc::::looolclc..'llcc::loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo|
+            |ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooocclclc,.,llcoooooccl;,coooc::coodo:::coooc,;cccooooocll,.,clclc:ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo|
+            |oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo::c;;clclooccccol;,coool;;::::::;;loooc,;loccccoolcll;;c:coooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo|
+            |oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooolll;;c:looc,,;:ooc:coolllc:,'',:clllooc:coo:;,,cooc:c;;llloooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo|
+            |oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooc:;;ooo:.';cooooooo;:ol:;::;:lo:;oooooooc;'.:ooo;;:cooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo|
+            |oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo:':ool;..,coooocll;:ccllllllcc:;llcooooc,..;loo:'coooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo|
+            |oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo:;:loc:;,;coool::c:::cooodooc:::c:;loooc;,;:col:;:oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo|
+            |ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo:;lcllcllcc;coolc:;::::oooool::::;:clooc;ccllcllcl;:ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo|
+            |ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooc;coccccoooc''lolcc;;:;:loodol:;:;;cclol''loooccccoc;coooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo|
+            |oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooool;:ool::loool..:lc:c::;;;;ccc:;;;;::c:cl:..loool::loo:;looooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo|
+            |oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooc:looollooool..,c;,cc::;:,,;;,':;::cc,;c,..loooolloool:cooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo|
+            |oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooool,',;,':;;l:;;;;;;;;:c;;:',;,',looooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo|
+            |oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooool:;,,'.;;;l:,::;;::,cl;;;.',,;:looooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo|
+            |oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooool;,'.,:lo:;cc;;cl;:ol:,.',;looooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo|
+            |ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooc;,',coo:;l,..,l;:ooc,',;coooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo|
+            |ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooc,':ooccl;..;lccoo:',coooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo|
+            |ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooool;':oocclcccclccoo:';loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo|
+            |oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooool:cooc;ccc:cc;:ooc:looooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo|
+            |ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooc;:cccc:;coooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo|
+            |ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooool;;cccc;;loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo|
+            |ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo;,:cc:,;ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo|
+            |oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooc;:cc:;cooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo|
+            |oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo:;cc;:oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo|
+            |oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo:;cc;:oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo|
+            |ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooc;cc;coooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo|
+            |ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooollolooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo|
+            |oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo|
+            |oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo|
+            |oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo|
+            |oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo|
+            |oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo|
+            |oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo|
+            |oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo|
+            |oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo|
+            |oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo|
+            |oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo|
+            |oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo|
+            |oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo|
+            |oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo|
+            |oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo|
+            |oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo|
+            |oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo|
+            |oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo|
+            |oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo|
+        </p>
+    </body>
+</html>
